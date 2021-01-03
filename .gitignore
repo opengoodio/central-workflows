@@ -1,0 +1,14 @@
+### macOS ###
+.DS_Store
+
+### IntelliJ IDEA ###
+*.iml
+*.ipr
+*.iws
+.idea
+generated/
+generated_tests/
+out/
+
+### GitHub Actions ###
+\~/
