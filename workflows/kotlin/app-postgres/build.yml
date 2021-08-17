@@ -6,6 +6,10 @@ on:
     branches:
       - main
     paths-ignore:
+      - '.github/workflows/cancel.yml'
+      - '.github/workflows/deploy-dev.yml'
+      - '.github/workflows/deploy-prod.yml'
+      - '.github/workflows/release.yml'
       - '.gitignore'
       - 'gradle.properties'
       - 'LICENSE'
@@ -15,7 +19,7 @@ jobs:
   build:
     name: Run Build
     runs-on: ubuntu-latest
-    if: ${{ github.event.head_commit.message != 'Create release' }}
+    if: ${{ github.event.head_commit.message != 'Create release' && github.event.head_commit.message != 'Deploy dev' && github.event.head_commit.message != 'Deploy prod' }}
 
     services:
       postgres:
