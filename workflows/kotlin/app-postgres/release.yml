@@ -19,6 +19,8 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     if: ${{ github.event.head_commit.message == 'Create release' }}
     steps:
       - name: Checkout
@@ -46,5 +48,5 @@ jobs:
           arguments: clean release -PskipTests=true -Prelease.useAutomaticVersion=true
           gradle-version: wrapper
         env:
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+          GITHUB_USER: ${{ secrets.CI_USER_GITHUB_PUBLISH }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
