@@ -20,6 +20,7 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       packages: write
     if: ${{ github.event.head_commit.message == 'Create release' }}
     steps:
@@ -41,6 +42,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          distribution: 'adopt'
 
       - name: Run Release and Publish
         uses: burrunan/gradle-cache-action@v1
@@ -48,5 +50,5 @@ jobs:
           arguments: clean release -PskipTests=true -Prelease.useAutomaticVersion=true
           gradle-version: wrapper
         env:
-          GITHUB_USER: ${{ secrets.CI_USER_GITHUB_PUBLISH }}
+          GITHUB_USER: ${{ secrets.CI_USER_GIT_USER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
