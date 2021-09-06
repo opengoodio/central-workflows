@@ -16,24 +16,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-
-      - name: Build
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: clean assemble
-          gradle-version: wrapper
-
-      - name: Clean Packages
+      - name: Download Release Artifact
         run: |
-          find build/libs -type f -name '*javadoc.jar' -delete
-          find build/libs -type f -name '*sources.jar' -delete
+          package=$(awk '/group/{print $NF; exit}' build.gradle.kts | sed s/\'//g | sed s/\"//g | tr "." "/")
+          name=$(awk '/rootProject.name/{print $NF; exit}' settings.gradle.kts | sed s/\'//g | sed s/\"//g)
+          version=$(echo "${COMMIT_MESSAGE}" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+          file=${name}-${version}.jar
+          artifact_uri="https://maven.pkg.github.com/${GITHUB_REPOSITORY}/${package}/${name}/${version}/${file}"
+
+          mkdir -p build/libs
+          cd build/libs
+
+          curl -H "Authorization: token ${GITHUB_TOKEN}" -L ${artifact_uri} -o ${file}
+          cat ${name}-${version}.jar
+
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Azure Login
         uses: azure/login@v1
