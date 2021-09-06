@@ -7,8 +7,6 @@ on:
       - main
     paths-ignore:
       - '.github/workflows/cancel.yml'
-      - '.github/workflows/deploy-dev.yml'
-      - '.github/workflows/deploy-prod.yml'
       - '.github/workflows/release.yml'
       - '.gitignore'
       - 'gradle.properties'
@@ -19,7 +17,7 @@ jobs:
   build:
     name: Run Build
     runs-on: ubuntu-latest
-    if: ${{ github.event.head_commit.message != 'Create release' && !contains(github.event.head_commit.message, 'Deploy dev') && !contains(github.event.head_commit.message, 'Deploy prod') }}
+    if: ${{ github.event.head_commit.message != 'Create release' }}
 
     services:
       postgres:
