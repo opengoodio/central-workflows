@@ -28,7 +28,6 @@ jobs:
           cd build/libs
 
           curl -H "Authorization: token ${GITHUB_TOKEN}" -L ${artifact_uri} -o ${file}
-          cat ${name}-${version}.jar
 
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
