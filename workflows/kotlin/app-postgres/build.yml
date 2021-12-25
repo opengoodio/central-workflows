@@ -11,6 +11,7 @@ on:
       - '.github/workflows/deploy-dev.yml'
       - '.github/workflows/deploy-prod.yml'
       - '.github/workflows/release.yml'
+      - '.github/workflows/updater.yml'
       - '.gitignore'
       - 'gradle.properties'
       - 'LICENSE'
