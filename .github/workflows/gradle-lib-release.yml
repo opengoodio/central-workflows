@@ -1,0 +1,60 @@
+name: gradle-lib-release
+
+on:
+  workflow_call:
+    secrets:
+      git-email:
+        description: Git user email address
+        required: true
+      git-user:
+        description: Git user username
+        required: true
+      gpg-signing-password:
+        description: GPG signing password for publishing to OSS repositories
+        required: true
+      gpg-signing-private-key:
+        description: GPG signing private key for publishing to OSS repositories
+        required: true
+      oss-repo-username:
+        description: Username for publishing to OSS repositories
+        required: true
+      oss-repo-password:
+        description: Password for publishing to OSS repositories
+        required: true
+
+jobs:
+  gradle-lib-release:
+    name: Create Gradle Library Release
+    runs-on: ubuntu-latest
+    if: ${{ github.event.head_commit.message == 'Create release' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1.0.4
+
+      - name: Setup Git
+        run: |
+          git config user.email ${GIT_EMAIL}
+          git config user.name ${GIT_USER}
+        env:
+          GIT_EMAIL: ${{ secrets.git-user }}
+          GIT_USER: ${{ secrets.git-email }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v2.5.0
+        with:
+          java-version: 11
+          distribution: adopt
+
+      - name: Run Release and Publish
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          arguments: clean release -PskipTests=true -Prelease.useAutomaticVersion=true
+          gradle-version: wrapper
+        env:
+          GPG_SIGNING_PASSWORD: ${{ secrets.gpg-signing-password }}
+          GPG_SIGNING_PRIVATE_KEY: ${{ secrets.gpg-signing-private-key }}
+          OSS_REPO_USERNAME: ${{ secrets.oss-repo-username }}
+          OSS_REPO_PASSWORD: ${{ secrets.oss-repo-password }}
