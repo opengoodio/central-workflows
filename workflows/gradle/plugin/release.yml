@@ -1,0 +1,15 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    uses: opengoodio/central-workflows/.github/workflows/gradle-plugin-release.yml@main
+    secrets:
+      git-email: ${{ secrets.GIT_EMAIL }}
+      git-user: ${{ secrets.GIT_USER }}
+      gradle-plugin-publish-key: ${{ secrets.GRADLE_PLUGIN_PUBLISH_KEY }}
+      gradle-plugin-publish-secret: ${{ secrets.GRADLE_PLUGIN_PUBLISH_SECRET }}

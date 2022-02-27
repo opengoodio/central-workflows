@@ -1,0 +1,52 @@
+name: gradle-plugin-release
+
+on:
+  workflow_call:
+    secrets:
+      git-email:
+        description: Git user email address
+        required: true
+      git-user:
+        description: Git user username
+        required: true
+      gradle-plugin-publish-key:
+        description: Gradle plugin key used for publishing to Gradle plugin repository
+        required: true
+      gradle-plugin-publish-secret:
+        description: Gradle plugin secret used for publishing to Gradle plugin repository
+        required: true
+
+jobs:
+  gradle-plugin-release:
+    name: Create Gradle Plugin Release
+    runs-on: ubuntu-latest
+    if: ${{ github.event.head_commit.message == 'Create release' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1.0.4
+
+      - name: Setup Git
+        run: |
+          git config user.email ${GIT_EMAIL}
+          git config user.name ${GIT_USER}
+        env:
+          GIT_EMAIL: ${{ secrets.git-user }}
+          GIT_USER: ${{ secrets.git-email }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v2.5.0
+        with:
+          java-version: 11
+          distribution: adopt
+
+      - name: Run Release and Publish
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          arguments: clean release -PskipTests=true -Prelease.useAutomaticVersion=true
+          gradle-version: wrapper
+        env:
+          GRADLE_PLUGIN_PUBLISH_KEY: ${{ secrets.gradle-plugin-publish-key }}
+          GRADLE_PLUGIN_PUBLISH_SECRET: ${{ secrets.gradle-plugin-publish-secret }}
