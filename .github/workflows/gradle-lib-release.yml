@@ -31,8 +31,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1.0.4
+#      - name: Validate Gradle Wrapper
+#        uses: gradle/wrapper-validation-action@v1.0.4
 
       - name: Setup Git
         run: |
