@@ -6,15 +6,6 @@ on:
         description: FOSSA licensing scan API key
         required: true
 
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - .gitignore
-      - gradle.properties
-      - LICENSE
-      - README.md
-
 jobs:
   build:
     runs-on: ubuntu-latest
