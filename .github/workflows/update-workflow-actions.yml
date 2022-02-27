@@ -1,4 +1,4 @@
-name: workflow-actions-updater
+name: update-workflow-actions
 on:
   workflow_dispatch:
   schedule:
@@ -6,8 +6,8 @@ on:
     - cron: '0 0 * * 0'
 
 jobs:
-  workflow-actions-updater:
-    name: Run Update Workflow Actions Versions
+  update-workflow-actions:
+    name: Run Update Workflow Actions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
