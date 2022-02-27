@@ -1,0 +1,24 @@
+name: workflow-actions-updater
+on:
+  workflow_dispatch:
+  schedule:
+    # Automatically run every Sunday at midnight
+    - cron: '0 0 * * 0'
+
+jobs:
+  workflow-actions-updater:
+    name: Run Update Workflow Actions Versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      - name: Update Workflow Action Versions
+        uses: saadmk11/github-actions-version-updater@v0.5.6
+        with:
+          committer_username: ${{ secrets.GIT_USER }}
+          committer_email: ${{ secrets.GIT_EMAIL }}
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+          ignore: '["actions/checkout@v2", "actions/cache@v2"]'
