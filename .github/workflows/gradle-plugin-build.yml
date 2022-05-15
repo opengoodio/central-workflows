@@ -18,6 +18,8 @@ jobs:
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1.0.4
+        with:
+          allow-snapshots: true
 
       - name: Setup Java
         uses: actions/setup-java@v3.3.0
