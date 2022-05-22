@@ -1,0 +1,35 @@
+name: bash-bats-build
+
+on:
+  workflow_call:
+
+jobs:
+  bash-bats-build:
+    name: Bash Bats Build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.head_commit.message != 'Create release' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: 12
+
+      - name: Install Node
+        run: npm install
+
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1.2.0
+        with:
+          bats-version: 1.2.1
+
+      - name: Install BATS Support
+        run: npm install --save-dev https://github.com/ztombol/bats-support
+
+      - name: Install BATS Assert
+        run: npm install --save-dev https://github.com/ztombol/bats-assert
+
+      - name: Build
+        run: bats -r test

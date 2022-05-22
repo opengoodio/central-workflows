@@ -5,7 +5,7 @@ on:
 
 jobs:
   workflow-cancel:
-    name: Cancel Workflow
+    name: Workflow Cancel
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
