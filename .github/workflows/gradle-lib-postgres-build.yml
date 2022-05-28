@@ -6,6 +6,9 @@ on:
       fossa-api-key:
         description: FOSSA licensing scan API key
         required: true
+      postgres-admin-db-uri:
+        description: Postgres admin database connection URI
+        required: true
       postgres-admin-password:
         description: Postgres admin password
         required: true
@@ -56,7 +59,7 @@ jobs:
           psql -c "CREATE USER ${POSTGRES_DB_USER} WITH ENCRYPTED PASSWORD '${POSTGRES_DB_PASSWORD}';" ${POSTGRES_DB_URI}
           psql -f migrations/create_database.sql ${POSTGRES_DB_URI}
         env:
-          POSTGRES_DB_URI: 'postgresql://postgres:postgres@localhost:5432/postgres'
+          POSTGRES_DB_URI: ${{ secrets.postgres-admin-db-uri }}
           POSTGRES_DB_USER: ${{ secrets.postgres-build-db-svc-name }}
           POSTGRES_DB_PASSWORD: ${{ secrets.postgres-build-db-svc-password }}
 
