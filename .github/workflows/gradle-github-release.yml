@@ -48,5 +48,5 @@ jobs:
           arguments: clean release -PskipTests=true -Prelease.useAutomaticVersion=true
           gradle-version: wrapper
         env:
-          GITHUB_USER: ${{ secrets.GIT_USER }}
+          GITHUB_USER: ${{ secrets.git-user }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
