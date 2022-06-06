@@ -8,6 +8,8 @@ on:
 jobs:
   deploy-dev:
     uses: opengoodio/central-workflows/.github/workflows/gradle-azure-app-service-deploy.yml@main
+    with:
+      env: dev
     secrets:
       azure-app-credentials: ${{ secrets.AZURE_CREDENTIALS_DEV }}
       azure-app-name: ${{ secrets.AZURE_APP_NAME_DEV }}
