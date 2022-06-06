@@ -2,6 +2,11 @@ name: gradle-lib-build
 
 on:
   workflow_call:
+    inputs:
+      run-gradle-validation:
+        type: boolean
+        description: Value indicating if Gradle validation step should run
+        required: true
     secrets:
       fossa-api-key:
         description: FOSSA licensing scan API key
@@ -16,8 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-#      - name: Validate Gradle Wrapper
-#        uses: gradle/wrapper-validation-action@v1.0.4
+      - name: Validate Gradle Wrapper
+        if: ${{ inputs.run-gradle-validation == 'true' }}
+        uses: gradle/wrapper-validation-action@v1.0.4
 
       - name: Setup Java
         uses: actions/setup-java@v3.3.0
