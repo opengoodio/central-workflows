@@ -8,7 +8,8 @@ on:
 jobs:
   release:
     uses: opengoodio/central-workflows/.github/workflows/gradle-github-release.yml@main
+    with:
+      run-gradle-validation: false
     secrets:
       git-email: ${{ secrets.GIT_EMAIL }}
       git-user: ${{ secrets.GIT_USER }}
-      run-gradle-validation: false
