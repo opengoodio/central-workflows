@@ -34,15 +34,6 @@ on:
       postgres-build-db-svc-password:
         description: Postgres database service account password for performing builds
         required: true
-      run-coverage:
-        description: Value indicating if coverage step should run
-        required: true
-      run-fossa:
-        description: Value indicating if FOSSA step should run
-        required: true
-      run-gradle-validation:
-        description: Value indicating if Gradle validation step should run
-        required: true
 
 jobs:
   gradle-app-postgres-build:
