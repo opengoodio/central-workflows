@@ -1,0 +1,61 @@
+name: gradle-azure-app-service-deploy
+
+on:
+  workflow_call:
+    secrets:
+      azure-app-credentials:
+        description: Credentials used to authenticate with Azure cloud services
+        required: true
+      azure-app-name:
+        description: Azure App Service application name
+        required: true
+      azure-app-profile:
+        description: Azure App Service application profile
+        required: true
+      azure-app-settings:
+        description: Azure App Service application settings
+        required: true
+
+jobs:
+  gradle-azure-app-service-dev-deploy:
+    name: Gradle Azure App Service Deploy
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'Deploy') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download Release Artifact
+        run: |
+          package=$(awk '/group/{print $NF; exit}' build.gradle.kts | sed s/\'//g | sed s/\"//g | tr "." "/")
+          name=$(awk '/rootProject.name/{print $NF; exit}' settings.gradle.kts | sed s/\'//g | sed s/\"//g)
+          version=$(echo "${COMMIT_MESSAGE}" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+          file=${name}-${version}.jar
+          artifact_uri="https://maven.pkg.github.com/${GITHUB_REPOSITORY}/${package}/${name}/${version}/${file}"
+          
+          mkdir -p build/libs
+          cd build/libs
+          
+          curl -H "Authorization: token ${GITHUB_TOKEN}" -L ${artifact_uri} -o ${file}
+
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.azure-app-credentials }}
+
+      - name: Configure App Settings
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: ${{ secrets.azure-app-name }}
+          app-settings-json: ${{ secrets.azure-app-settings }}
+
+      - name: Deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.azure-app-name }}
+          publish-profile: ${{ secrets.azure-app-profile }}
+          package: build/libs/*.jar

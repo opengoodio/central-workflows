@@ -1,0 +1,50 @@
+name: gradle-github-release
+
+on:
+  workflow_call:
+    secrets:
+      git-email:
+        description: Git user email address
+        required: true
+      git-user:
+        description: Git user username
+        required: true
+      run-gradle-validation:
+        description: Value indicating if Gradle validation step should run
+        required: true
+
+jobs:
+  gradle-github-release:
+    name: Gradle GitHub Release
+    runs-on: ubuntu-latest
+    if: ${{ github.event.head_commit.message == 'Create release' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Validate Gradle Wrapper
+        if: ${{ run-gradle-validation == 'true' }}
+        uses: gradle/wrapper-validation-action@v1.0.4
+
+      - name: Setup Git
+        run: |
+          git config user.email ${GIT_EMAIL}
+          git config user.name ${GIT_USER}
+        env:
+          GIT_EMAIL: ${{ secrets.git-user }}
+          GIT_USER: ${{ secrets.git-email }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.3.0
+        with:
+          java-version: 11
+          distribution: adopt
+
+      - name: Release and Publish
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          arguments: clean release -PskipTests=true -Prelease.useAutomaticVersion=true
+          gradle-version: wrapper
+        env:
+          GITHUB_USER: ${{ secrets.GIT_USER }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

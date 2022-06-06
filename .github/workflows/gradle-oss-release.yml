@@ -1,4 +1,4 @@
-name: gradle-lib-release
+name: gradle-oss-release
 
 on:
   workflow_call:
@@ -21,18 +21,22 @@ on:
       oss-repo-password:
         description: Password for publishing to OSS repositories
         required: true
+      run-gradle-validation:
+        description: Value indicating if Gradle validation step should run
+        required: true
 
 jobs:
-  gradle-lib-release:
-    name: Gradle Library Release
+  gradle-oss-release:
+    name: Gradle OSS Release
     runs-on: ubuntu-latest
     if: ${{ github.event.head_commit.message == 'Create release' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-#      - name: Validate Gradle Wrapper
-#        uses: gradle/wrapper-validation-action@v1.0.4
+      - name: Validate Gradle Wrapper
+        if: ${{ run-gradle-validation == 'true' }}
+        uses: gradle/wrapper-validation-action@v1.0.4
 
       - name: Setup Git
         run: |

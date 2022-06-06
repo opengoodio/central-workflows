@@ -1,0 +1,25 @@
+name: workflow-clear-packages
+
+on:
+  workflow_call:
+
+jobs:
+  workflow-clear-packages:
+    name: Workflow Clear Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set Package Name
+        run: |
+          group=$(awk '/group/{print $NF; exit}' build.gradle.kts | sed s/\'//g | sed s/\"//g)
+          name=$(awk '/rootProject.name/{print $NF; exit}' settings.gradle.kts | sed s/\'//g | sed s/\"//g)
+          echo "PACKAGE_NAME=${group}.${name}" >> $GITHUB_ENV
+
+      - name: Clear Packages
+        uses: WPMedia/delete-github-package-versions@v0.4.10
+        with:
+          keep: 2
+          names: |
+            ${{ env.PACKAGE_NAME }}
