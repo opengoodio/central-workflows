@@ -18,12 +18,13 @@ on:
 jobs:
   build:
     uses: opengoodio/central-workflows/.github/workflows/gradle-app-postgres-build.yml@main
+    with:
+      run-coverage: false
+      run-fossa: false
+      run-gradle-validation: false
     secrets:
       postgres-admin-db-uri: ${{ secrets.POSTGRES_ADMIN_DB_URI }}
       postgres-admin-password: ${{ secrets.POSTGRES_ADMIN_DB_PASSWORD }}
       postgres-build-db-uri: ${{ secrets.POSTGRES_BUILD_DB_URI }}
       postgres-build-db-svc-name: ${{ secrets.POSTGRES_BUILD_DB_SVC_NAME }}
       postgres-build-db-svc-password: ${{ secrets.POSTGRES_BUILD_DB_SVC_PASSWORD }}
-      run-coverage: false
-      run-fossa: false
-      run-gradle-validation: false
