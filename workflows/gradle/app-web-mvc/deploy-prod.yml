@@ -9,7 +9,7 @@ jobs:
   deploy-prod:
     uses: opengoodio/central-workflows/.github/workflows/gradle-azure-app-service-deploy.yml@main
     with:
-      env: dev
+      env: prod
     secrets:
       azure-app-credentials: ${{ secrets.AZURE_CREDENTIALS_PROD }}
       azure-app-name: ${{ secrets.AZURE_APP_NAME_PROD }}
