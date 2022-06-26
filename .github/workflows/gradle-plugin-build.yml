@@ -3,10 +3,21 @@ name: gradle-plugin-build
 on:
   workflow_call:
     inputs:
+      java-distribution:
+        type: string
+        description: Name of Java JDK distribution to use
+        required: false
+        default: temurin
+      java-version:
+        type: number
+        description: Version of Java JDK to use
+        required: false
+        default: 17
       run-gradle-validation:
         type: boolean
         description: Value indicating if Gradle validation step should run
         required: true
+
     secrets:
       fossa-api-key:
         description: FOSSA licensing scan API key
@@ -28,8 +39,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3.4.0
         with:
-          java-version: 11
-          distribution: adopt
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.java-distribution }}
 
       - name: Build
         uses: burrunan/gradle-cache-action@v1

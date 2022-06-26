@@ -19,6 +19,7 @@ jobs:
   build:
     uses: opengoodio/central-workflows/.github/workflows/gradle-app-build.yml@main
     with:
+      java-version: 11
       run-coverage: false
       run-fossa: false
       run-gradle-validation: false

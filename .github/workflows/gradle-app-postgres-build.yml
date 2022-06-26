@@ -3,6 +3,16 @@ name: gradle-app-postgres-build
 on:
   workflow_call:
     inputs:
+      java-distribution:
+        type: string
+        description: Name of Java JDK distribution to use
+        required: false
+        default: temurin
+      java-version:
+        type: number
+        description: Version of Java JDK to use
+        required: false
+        default: 17
       run-coverage:
         type: boolean
         description: Value indicating if coverage step should run
@@ -65,8 +75,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3.4.0
         with:
-          java-version: 11
-          distribution: adopt
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.java-distribution }}
 
       - name: Create Postgres Database and Service Account
         run: |
