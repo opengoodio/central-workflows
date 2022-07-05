@@ -36,9 +36,6 @@ on:
       oss-repo-password:
         description: Password for publishing to OSS repositories
         required: true
-      run-gradle-validation:
-        description: Value indicating if Gradle validation step should run
-        required: true
 
 jobs:
   gradle-oss-release:
