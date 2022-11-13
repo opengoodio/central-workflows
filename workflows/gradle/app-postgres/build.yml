@@ -22,7 +22,7 @@ jobs:
       java-version: 11
       run-coverage: false
       run-fossa: false
-      run-gradle-validation: false
+      run-gradle-validation: true
     secrets:
       postgres-admin-db-uri: ${{ secrets.POSTGRES_ADMIN_DB_URI }}
       postgres-admin-password: ${{ secrets.POSTGRES_ADMIN_DB_PASSWORD }}

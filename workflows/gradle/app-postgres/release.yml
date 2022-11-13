@@ -10,7 +10,7 @@ jobs:
     uses: opengoodio/central-workflows/.github/workflows/gradle-github-release.yml@main
     with:
       java-version: 11
-      run-gradle-validation: false
+      run-gradle-validation: true
     secrets:
       git-email: ${{ secrets.GIT_EMAIL }}
       git-user: ${{ secrets.GIT_USER }}
