@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.WORKFLOW_TOKEN }}
 
       - name: Update Workflow Action Versions
-        uses: saadmk11/github-actions-version-updater@v0.7.1
+        uses: saadmk11/github-actions-version-updater@v0.7.3
         with:
           committer_username: ${{ secrets.GIT_USER }}
           committer_email: ${{ secrets.GIT_EMAIL }}
