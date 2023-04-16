@@ -61,7 +61,7 @@ jobs:
 
       - name: Coverage
         if: ${{ inputs.run-coverage == 'true' }}
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v3.1.2
         with:
           file: ./build/reports/jacoco/test/jacocoTestReport.xml
           verbose: true
