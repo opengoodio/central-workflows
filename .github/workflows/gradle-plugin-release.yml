@@ -3,6 +3,14 @@ name: gradle-plugin-release
 on:
   workflow_call:
     inputs:
+      git-email:
+        type: string
+        description: Git user email address
+        required: true
+      git-user:
+        type: string
+        description: Git user username
+        required: true
       java-distribution:
         type: string
         description: Name of Java JDK distribution to use
@@ -18,12 +26,6 @@ on:
         description: Value indicating if Gradle validation step should run
         required: true
     secrets:
-      git-email:
-        description: Git user email address
-        required: true
-      git-user:
-        description: Git user username
-        required: true
       gradle-publish-key:
         description: Gradle plugin key used for publishing to Gradle plugin repository
         required: true
@@ -49,8 +51,8 @@ jobs:
           git config user.email ${GIT_EMAIL}
           git config user.name ${GIT_USER}
         env:
-          GIT_EMAIL: ${{ secrets.git-user }}
-          GIT_USER: ${{ secrets.git-email }}
+          GIT_EMAIL: ${{ inputs.git-user }}
+          GIT_USER: ${{ inputs.git-email }}
 
       - name: Setup Java
         uses: actions/setup-java@v3.11.0
