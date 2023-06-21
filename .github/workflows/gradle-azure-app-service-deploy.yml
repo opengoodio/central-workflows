@@ -7,12 +7,13 @@ on:
         type: string
         description: Environment in which to deploy
         required: true
+      azure-app-name:
+        type: string
+        description: Azure App Service application name
+        required: true
     secrets:
       azure-app-credentials:
         description: Credentials used to authenticate with Azure cloud services
-        required: true
-      azure-app-name:
-        description: Azure App Service application name
         required: true
       azure-app-profile:
         description: Azure App Service application profile
@@ -55,7 +56,7 @@ jobs:
       - name: Configure App Settings
         uses: azure/appservice-settings@v1
         with:
-          app-name: ${{ secrets.azure-app-name }}
+          app-name: ${{ inputs.azure-app-name }}
           app-settings-json: ${{ secrets.azure-app-settings }}
 
       - name: Deploy
