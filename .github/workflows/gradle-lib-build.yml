@@ -77,11 +77,11 @@ jobs:
           args: >
             --failOnCVSS 7
             --enableRetired
+        env:
+          JAVA_HOME: /opt/jdk
 
       - name: Publish Dependency Check Results
         uses: actions/upload-artifact@master
         with:
           name: Dependency Check Report
           path: ${{ github.workspace }}/reports/dependency-check
-        env:
-          JAVA_HOME: /opt/jdk
