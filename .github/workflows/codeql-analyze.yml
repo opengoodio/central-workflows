@@ -45,14 +45,14 @@ jobs:
           distribution: ${{ inputs.java-distribution }}
 
       - name: Initialize
-        uses: github/codeql-action/init@codeql-bundle-20230524
+        uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
 
       - name: Auto Build
-        uses: github/codeql-action/autobuild@codeql-bundle-20230524
+        uses: github/codeql-action/autobuild@v2
 
       - name: Analyze
-        uses: github/codeql-action/analyze@codeql-bundle-20230524
+        uses: github/codeql-action/analyze@v2
         with:
           category: "/language:${{matrix.language}}"
