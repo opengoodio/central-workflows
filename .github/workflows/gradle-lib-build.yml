@@ -83,3 +83,5 @@ jobs:
         with:
           name: Dependency Check Report
           path: ${{ github.workspace }}/reports/dependency-check
+        env:
+          JAVA_HOME: /opt/jdk
