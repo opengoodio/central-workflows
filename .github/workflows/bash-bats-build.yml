@@ -15,15 +15,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4.0.0
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install Node
-        run: npm install
+        run: npm install node
 
       - name: Setup BATS
         uses: mig4/setup-bats@v1.2.0
         with:
-          bats-version: 1.2.1
+          bats-version: 1.10.0
 
       - name: Install BATS Support
         run: npm install --save-dev https://github.com/ztombol/bats-support
