@@ -2,6 +2,17 @@ name: CodeQL
 
 on:
   workflow_call:
+    inputs:
+      java-distribution:
+        type: string
+        description: Name of Java JDK distribution to use
+        required: false
+        default: temurin
+      java-version:
+        type: number
+        description: Version of Java JDK to use
+        required: false
+        default: 17
 
 jobs:
   analyze:
@@ -22,6 +33,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.13.0
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.java-distribution }}
 
       - name: Initialize
         uses: github/codeql-action/init@v2
