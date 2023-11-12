@@ -73,7 +73,7 @@ jobs:
           project: ${{ env.PACKAGE_NAME }}
           path: .
           format: HTML
-          out: reports
+          out: reports/dependency-check
           args: >
             --failOnCVSS 7
             --enableRetired
