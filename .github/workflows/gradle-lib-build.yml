@@ -29,7 +29,7 @@ jobs:
     if: ${{ github.event.head_commit.message != 'Create release' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
 
       - name: Validate Gradle Wrapper
         if: ${{ inputs.run-gradle-validation == true }}
@@ -68,7 +68,7 @@ jobs:
           api-key: ${{ secrets.fossa-api-key }}
 
       - name: Dependency Check
-        uses: dependency-check/Dependency-Check_Action@main
+        uses: dependency-check/Dependency-Check_Action@1.1.0
         with:
           project: ${{ env.PACKAGE_NAME }}
           path: .
@@ -81,7 +81,7 @@ jobs:
           JAVA_HOME: /opt/jdk
 
       - name: Publish Dependency Check Results
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: Dependency Check Report
           path: ${{ github.workspace }}/reports/dependency-check

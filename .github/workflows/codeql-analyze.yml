@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
 
       - name: Setup Java
         uses: actions/setup-java@v3.13.0
@@ -46,14 +46,14 @@ jobs:
           distribution: ${{ inputs.java-distribution }}
 
       - name: Initialize
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@codeql-bundle-20230524
         with:
           languages: ${{ matrix.language }}
 
       - name: Auto Build
-        uses: github/codeql-action/autobuild@v2
+        uses: github/codeql-action/autobuild@codeql-bundle-20230524
 
       - name: Analyze
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@codeql-bundle-20230524
         with:
           category: "/language:${{matrix.language}}"
