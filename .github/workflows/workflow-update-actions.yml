@@ -22,4 +22,3 @@ jobs:
           committer_username: ${{ vars.GIT_USER }}
           committer_email: ${{ vars.GIT_EMAIL }}
           token: ${{ secrets.WORKFLOW_TOKEN }}
-          ignore: '["actions/checkout@v2", "actions/cache@v2"]'

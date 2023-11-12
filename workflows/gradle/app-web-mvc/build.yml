@@ -5,9 +5,9 @@ on:
     branches:
       - main
     paths-ignore:
-      - .github/workflows/analyze.yml
       - .github/workflows/cancel.yml
       - .github/workflows/clear-packages.yml
+      - .github/workflows/codeql.yml
       - .github/workflows/deploy-dev.yml
       - .github/workflows/deploy-prod.yml
       - .github/workflows/release.yml
