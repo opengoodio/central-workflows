@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Azure Login
-        uses: azure/login@v1.5.1
+        uses: azure/login@v1.6.1
         with:
           creds: ${{ secrets.azure-app-credentials }}
 
