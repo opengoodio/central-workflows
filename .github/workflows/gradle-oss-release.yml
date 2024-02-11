@@ -50,7 +50,7 @@ jobs:
 
       - name: Validate Gradle Wrapper
         if: ${{ inputs.run-gradle-validation == true }}
-        uses: gradle/wrapper-validation-action@v2.0.0
+        uses: gradle/wrapper-validation-action@v2.1.1
 
       - name: Setup Git
         run: |
