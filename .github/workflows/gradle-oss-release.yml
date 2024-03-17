@@ -50,7 +50,7 @@ jobs:
 
       - name: Validate Gradle Wrapper
         if: ${{ inputs.run-gradle-validation == true }}
-        uses: gradle/wrapper-validation-action@v2.0.0
+        uses: gradle/wrapper-validation-action@v2.1.1
 
       - name: Setup Git
         run: |
@@ -61,7 +61,7 @@ jobs:
           GIT_USER: ${{ inputs.git-email }}
 
       - name: Setup Java
-        uses: actions/setup-java@v4.0.0
+        uses: actions/setup-java@v4.2.1
         with:
           java-version: ${{ inputs.java-version }}
           distribution: ${{ inputs.java-distribution }}
